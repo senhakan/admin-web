@@ -527,7 +527,13 @@ const OrgDetails = () => {
     const { force } = state;
     e.preventDefault();
     put(parseInt(getStringAfterLastSlash()), formatData(), { force: force })
-      .then(resp => setState({ ...state, snackbar: 'Success! ' + (resp?.message || '') }))
+      .then(async resp => {
+        setState({ ...state, snackbar: 'Success! ' + (resp?.message || '') });
+        // Recheck connection
+        const res = await fetchLdap(parseInt(getStringAfterLastSlash()))
+          .catch(snackbar => setState({ ...state, snackbar }));
+        setAvailable(res?.ldapAvailable || false);
+      })
       .catch(snackbar => setState({ ...state, snackbar }));
   }
 

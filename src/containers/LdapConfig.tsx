@@ -465,8 +465,15 @@ const LdapConfig = () => {
       put(formatData(), { force: force }),
       authMgr({ authBackendSelection }),
     ])
-      .then(() => setState({ ...state, snackbar: 'Success!' }))
+      .then(async () => {
+        setState({ ...state, snackbar: 'Success!' });
+        // Recheck connection
+        const resp = await fetch()
+          .catch(snackbar => setState({ ...state, snackbar }));
+        setAvailable(resp?.ldapAvailable || false);
+      })
       .catch(snackbar => setState({ ...state, snackbar }));
+    
   }
 
   const handleDelete = () => setState({ ...state, deleting: true });
