@@ -9,7 +9,7 @@ import { setDateTimeString } from '../../utils';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { fetchPlainUsersData } from '../../actions/users';
-import { getLicenseCreds, submitLicenseCreds, uploadLicenseData } from '../../actions/license';
+import { fetchLicenseData, getLicenseCreds, submitLicenseCreds, uploadLicenseData } from '../../actions/license';
 import { useNavigate } from 'react-router';
 import { ChangeEvent } from '@/types/common';
 import { useAppDispatch, useAppSelector } from '../../store';
@@ -152,7 +152,10 @@ const LicenseTab = (props: LicenseTabProps) => {
   const handleSubmit = () => {
     const { username, password } = state;
     dispatch(submitLicenseCreds({ username, password }))
-      .then(() => setSnackbar("Success!"))
+      .then(() => {
+        dispatch(fetchLicenseData());
+        setSnackbar("Success!");
+      })
       .catch(setSnackbar);
   }
 
