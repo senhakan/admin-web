@@ -34,6 +34,7 @@ import EditFetchmail from '../components/Dialogs/EditFetchmail';
 import { getPolicyDiff } from '../utils';
 import SyncPolicies from '../components/SyncPolicies';
 import Delegates from '../components/user/Delegates';
+import Folders from '../components/user/Folders';
 import { CapabilityContext } from '../CapabilityContext';
 import { DOMAIN_ADMIN_WRITE, SYSTEM_ADMIN_READ } from '../constants';
 import ViewWrapper from '../components/ViewWrapper';
@@ -802,34 +803,38 @@ const UserDetails = ({ domain }: DomainViewProps) => {
           handleAddAlias={handleAddAlias}
           handleRemoveAlias={handleRemoveAlias}
         />}
-        {tab === 6 && !!ID && <Delegates
+        {tab === 6 && <Folders
+          username={user.username}
+          domain={domain}
+        />}
+        {tab === 7 && !!ID && <Delegates
           domainID={domain.ID}
           orgID={domain.orgID}
           userID={user.ID}
           disabled={!writable}
         />}
-        {tab === 7 && !!ID && <Oof
+        {tab === 8 && !!ID && <Oof
           domainID={domain.ID}
           userID={user.ID}
         />}
-        {tab === 8 && <FetchMail
+        {tab === 9 && <FetchMail
           fetchmail={fetchmail}
           handleAdd={handleFetchmailDialog(true)}
           handleEdit={handleFetchmailEditDialog}
           handleDelete={handleFetchmailDelete}
         />}
-        {tab === 9 && !!ID && <SyncTab
+        {tab === 10 && !!ID && <SyncTab
           domainID={domain.ID}
           userID={user.ID}
         />}
-        {tab === 10 && !!ID && <SyncPolicies
+        {tab === 11 && !!ID && <SyncPolicies
           syncPolicy={syncPolicy}
           defaultPolicy={defaultPolicy}
           handleChange={handleSyncChange}
           handleCheckbox={handleSyncCheckboxChange}
           handleSlider={handleSlider}
         />}
-        {tab !== 6 && tab !== 7 && <Grid2 container className={classes.buttonGrid}>
+        {tab !== 7 && tab !== 8 && <Grid2 container className={classes.buttonGrid}>
           <Button
             onClick={() => navigate(-1)}
             style={{ marginRight: 8 }}

@@ -11,7 +11,7 @@ import { NewOrg, UpdateOrg } from './types/orgs';
 import { NewRole, UpdateRole } from './types/roles';
 import { NewServer, ServerPolicy, UpdateServer } from './types/servers';
 import { FetchSyncParams, RemoteWipeParams } from './types/sync';
-import { DeleteOrphanedUsersParams, NewUser, OofSettings, UpdateUser, USER_STATUS } from './types/users';
+import { AddUserFolderPermission, DeleteOrphanedUsersParams, DeleteUserFolderPermission, NewUser, OofSettings, UpdateUser, USER_STATUS } from './types/users';
 
 const baseUrl = '//' + window.location.host + '/api/v1';
 
@@ -112,11 +112,13 @@ async function put(path: string, data?: Record<string, any>) {
 /**
  * Sends DELETE request to rest api
  */
-async function yeet(path: string) {
+async function yeet(path: string, data?: Record<string, any>) {
   const csrf = store.getState().auth.csrf;
   return await fetch((baseUrl + path), {
     method: 'DELETE',
+    body: data ? JSON.stringify(data) : undefined,
     headers: {
+      'Content-Type': 'application/json',
       'X-CSRF-TOKEN': csrf,
     } as HeadersInit,
   }).then(handleErrors);
@@ -459,6 +461,30 @@ export function userOof(domainID: number, userID: number) {
 export function putUserOof(domainID: number, userID: number, oofSettings: OofSettings) {
   return async () => {
     return await put('/domains/' + domainID + '/users/'+ userID + '/oof', oofSettings);
+  };
+}
+
+export function userFolders(username: string) {
+  return async () => {
+    return await get('/system/exmdb/' + username + '/folders');
+  };
+}
+
+export function userFolder(username: string, folderID: string) {
+  return async () => {
+    return await get('/system/exmdb/' + username + '/folders/' + folderID);
+  };
+}
+
+export function addUserFolderPermission(username: string, folderID: string, permission: AddUserFolderPermission) {  // TODO: Define
+  return async () => {
+    return await post('/system/exmdb/' + username + '/folders/' + folderID + '/permissions', permission);
+  };
+}
+
+export function deleteUserFolderPermission(username: string, folderID: string, permission: DeleteUserFolderPermission) {  // TODO: Define
+  return async () => {
+    return await yeet('/system/exmdb/' + username + '/folders/' + folderID + '/permissions', permission);
   };
 }
 

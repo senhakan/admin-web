@@ -60,6 +60,41 @@ export const folderTypes: {name: string, ID: FolderContainer }[] = [
   { name: 'Task', ID: 'IPF.Task' },
 ]
 
+export const FOLDER_PERMISSION_TYPES = {
+  "readany": 0x1,
+  "create": 0x2,
+  "sendas": 0x4,
+  "editowned": 0x8,
+  "deleteowned": 0x10,
+  "editany": 0x20,
+  "deleteany": 0x40,
+  "createsubfolder": 0x80,
+  "folderowner": 0x100,
+  "foldercontact": 0x200,
+  "foldervisible": 0x400,
+  "freebusysimple": 0x800,
+  "freebusydetailed": 0x1000,
+  "storeowner": 0x2000
+}
+
+export const FOLDER_PERMISSIONS = [
+  { name: "Read any", value: 0x1 },
+  { name: "Create", value: 0x2 },
+  { name: "Send as", value: 0x4 },
+  { name: "Edit owned", value: 0x8 },
+  { name: "Delete owned", value: 0x10 },
+  { name: "Edit any", value: 0x20 },
+  { name: "Delete any", value: 0x40 },
+  { name: "Create sub folder", value: 0x80 },
+  { name: "Folder owner", value: 0x100 },
+  { name: "Folder contact", value: 0x200 },
+  { name: "Folder visible", value: 0x400 },
+  { name: "Free busy simple", value: 0x800 },
+  { name: "Free busy detailed", value: 0x1000 },
+  { name: "Store owner", value: 0x2000 },
+];
+export const ALL_FOLDER_PERMISSIONS = 0x3fff;
+
 export const ANSI_CODE_TO_JSS_CLASS = {
   "0;30": {},
   "0;31": { color: "red" },

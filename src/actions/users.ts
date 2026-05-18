@@ -22,13 +22,17 @@ import { user, allUsers, users, addUser, editUser, editUserRole, deleteUser, def
   userOof,
   putUserOof,
   contacts,
-  allContacts
+  allContacts,
+  userFolders,
+  userFolder,
+  addUserFolderPermission,
+  deleteUserFolderPermission
 } from '../api';
 import { defaultDeleteHandler, defaultDetailsHandler, defaultListHandler, defaultPatchHandler,
   defaultPostHandler } from './handlers';
 import { Dispatch } from 'redux';
 import { CheckLdapUsersParams, LdapDumpParams } from '@/types/ldap';
-import { DeleteOrphanedUsersParams, DeleteUserParams, FetchUserParams, NewContact, NewUser, OofSettings, UpdateUser, User } from '@/types/users';
+import { AddUserFolderPermission, DeleteOrphanedUsersParams, DeleteUserFolderPermission, DeleteUserParams, FetchUserParams, NewContact, NewUser, OofSettings, UpdateUser, User } from '@/types/users';
 import { ApiError } from '@/types/common';
 
 
@@ -150,6 +154,22 @@ export function fetchUserSync(domainID: number, userID: number) {
 
 export function fetchUserOof(domainID: number, userID: number) {
   return defaultDetailsHandler(userOof, domainID, userID);
+}
+
+export function fetchUserFolders(username: string) {
+  return defaultDetailsHandler(userFolders, username);
+}
+
+export function fetchUserFolder(username: string, folderID: number) {
+  return defaultDetailsHandler(userFolder, username, folderID);
+}
+
+export function setUserFolderPermissions(username: string, folderID: number, permission: AddUserFolderPermission) {
+  return defaultDetailsHandler(addUserFolderPermission, username, folderID, permission);
+}
+
+export function removeUserFolderPermissions(username: string, folderID: number, permission: DeleteUserFolderPermission) {
+  return defaultDetailsHandler(deleteUserFolderPermission, username, folderID, permission);
 }
 
 export function deleteUserSync(domainID: number, userID: number) {

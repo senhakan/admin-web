@@ -218,3 +218,16 @@ export type FetchUserParams = {
   [x: string]: unknown;
 } & URLParams;
 
+export type UserFolderPermission = {
+  name: string;
+  rightsName: string;
+  rights: number;
+}
+
+export type AddUserFolderPermission = {
+  username: string;
+  permissions: number[];
+  recursive: boolean;
+}
+
+export type DeleteUserFolderPermission = Omit<AddUserFolderPermission, "permissions">;

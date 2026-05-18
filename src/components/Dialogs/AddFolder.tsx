@@ -16,7 +16,7 @@ import { Domain } from '@/types/domains';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { NewFolder } from '@/types/folders';
 import { ChangeEvent } from '@/types/common';
-import { UserListItem } from '@/types/users';
+import { USER_STATUS, UserListItem } from '../../types/users';
 
 
 const useStyles = makeStyles()((theme: Theme) => ({
@@ -60,10 +60,19 @@ const AddFolder = (props: AddFolderProps) => {
 
   useEffect(() => {
     if(domain.orgID) {
-      dispatch(fetchAllUsers({ limit: 100000, sort: "username,asc", orgID: domain.orgID }))
+      dispatch(fetchAllUsers({
+        limit: 100000,
+        sort: "username,asc",
+        orgID: domain.orgID,
+        status: USER_STATUS.NORMAL,
+      }))
         .catch();
     } else {
-      dispatch(fetchUsersData(domain.ID, { limit: 100000, sort: "username,asc" }))
+      dispatch(fetchUsersData(domain.ID, {
+        limit: 100000,
+        sort: "username,asc",
+        status: USER_STATUS.NORMAL,
+      }))
         .catch();
     }
   }, []);

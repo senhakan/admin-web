@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: 2020-2026 grommunio GmbH
 
 import React from 'react';
-import { AccountBalance, AltRoute, AppSettingsAlt, Badge, ContactMail, ContactPhone, Key,
+import { AccountBalance, AltRoute, AppSettingsAlt, Badge, ContactMail, ContactPhone, Folder, Key,
   MobileFriendly, MoveToInbox, Quickreply, SupervisorAccount } from "@mui/icons-material";
 import { Tab, Tabs } from "@mui/material";
 import { useTranslation } from 'react-i18next';
@@ -56,6 +56,7 @@ function UserTabs({ ID, value, handleTabChange, sysAdminReadPermissions }: UserT
     <UserTab label={t("Contact")} disabled={!ID} icon={ContactPhone}/>
     <UserTab label={t("Roles")} disabled={!ID || !sysAdminReadPermissions} icon={SupervisorAccount}/>
     <UserTab label={t("SMTP")} disabled={!ID} icon={ContactMail}/>
+    <UserTab label={t("Folders")} disabled={!ID} icon={Folder}/>
     <UserTab label={t("Permissions")} disabled={!ID} icon={Key}/>
     <UserTab label={t("Out-of-Office")} disabled={!ID} icon={Quickreply}/>
     <UserTab label={t("Fetchmail")} disabled={!ID} icon={MoveToInbox}/>
