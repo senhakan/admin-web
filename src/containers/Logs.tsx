@@ -153,7 +153,7 @@ const Logs = () => {
   }
 
   const handleScroll = async () => {
-    if (!date && document.getElementById("logsList")?.scrollTop === 0) {
+    if (!date && document.getElementById("logsList")?.scrollTop === 0 && log.length >= 100) {
       const { skip } = state;
       let newLog = await fetchLog(filename, { skip: (skip + 1) * 100 })
         .catch(snackbar => setState({ ...state, snackbar }));
