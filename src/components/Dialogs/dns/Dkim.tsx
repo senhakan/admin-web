@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: 2020-2026 grommunio GmbH
 
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
-import { Dialog, DialogContent, DialogTitle, Divider, Theme, Typography } from '@mui/material';
+import { Button, Dialog, DialogContent, DialogTitle, Divider, Theme, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { DNSDialogProps } from './types';
+import GenerateDkimKeys from './GenerateDkimKeys';
 
 
 const useStyles = makeStyles()((theme: Theme) => ({
@@ -20,12 +21,29 @@ const useStyles = makeStyles()((theme: Theme) => ({
   }
 }));
 
+
 function Dkim({ onClose, dnsCheck, domain }: DNSDialogProps) {
   const { classes } = useStyles();
   const { t } = useTranslation();
-  return (
+  const [open, setOpen] = useState(false);
+
+  const handleKeygen = (open: boolean) => () => {
+    setOpen(open);
+  }
+
+  return (<>
     <Dialog open maxWidth="md" fullWidth onClose={onClose}>
-      <DialogTitle>{t("DKIM")}</DialogTitle>
+      <DialogTitle display="flex" justifyContent="space-between">
+        {t("DKIM")}
+        <Button
+          onClick={handleKeygen(true)}
+          variant='contained'
+          size='small'
+          sx={{ ml: 1 }}
+        >
+          Generate DKIM keypair
+        </Button>
+      </DialogTitle>
       <DialogContent>
         <Typography>{t("dkim_expl")}</Typography>
         <Divider className={classes.divider}/>
@@ -37,7 +55,12 @@ function Dkim({ onClose, dnsCheck, domain }: DNSDialogProps) {
         </pre>
       </DialogContent>
     </Dialog>
-  );
+    <GenerateDkimKeys
+      open={open}
+      onClose={handleKeygen(false)}
+      domain={domain}
+    />
+  </>);
 }
 
 
