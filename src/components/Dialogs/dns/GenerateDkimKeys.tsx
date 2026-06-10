@@ -38,7 +38,7 @@ function GenerateDkimKeys({ open, onClose, domain }: GenerateDkimKeysProps) {
   const handleKeygen = async () => {
     setSuccessfullyCopied(false);
     setLoading(true);
-    const key = await dkimKeygen(domain.ID, { type, selector });
+    const key = await dkimKeygen(domain.ID, { type, selector: selector || undefined });
     setPubkey(key);
     setLoading(false);
   }
