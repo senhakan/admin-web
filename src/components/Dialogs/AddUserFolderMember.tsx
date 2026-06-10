@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: 2020-2026 grommunio GmbH
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
 import { Dialog, DialogTitle, DialogContent, FormControl, 
   Button, DialogActions, CircularProgress,
@@ -106,6 +106,12 @@ const AddUserFolderMember = (props: AddUserFolderMemberProps) => {
 
   const handleAll = () => setAll(!all);
 
+  const fullUserOptions = useMemo(() => ([
+    {ID: -1, domainID: -1, username: "default"},
+    {ID: -2, domainID: -1, username: "anonymous"},
+    ...Users
+  ]), [Users]);
+
   return (
     <Dialog
       onClose={onClose}
@@ -121,7 +127,7 @@ const AddUserFolderMember = (props: AddUserFolderMemberProps) => {
             filterAttribute={'username'}
             onChange={handleAutocomplete}
             className={classes.input} 
-            options={Users || []}
+            options={fullUserOptions || []}
             label={t('Owners')}
             placeholder={t("Search users")  + "..."}
             getOptionKey={(option: UserListItem) => `${option.ID}_${option.domainID}`}
