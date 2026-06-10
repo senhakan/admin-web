@@ -12,6 +12,7 @@ import { Dialog, DialogTitle, DialogContent, FormControl,
   FormControlLabel,
   Checkbox,
   InputLabel,
+  Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { fetchAllUsers, fetchUsersData, setUserFolderPermissions } from '../../actions/users';
@@ -119,7 +120,12 @@ const AddUserFolderMember = (props: AddUserFolderMemberProps) => {
       maxWidth="sm"
       fullWidth
     >
-      <DialogTitle>{t('addHeadline', { item: 'Member' })}</DialogTitle>
+      <DialogTitle>
+        {t('addHeadline', { item: 'Member' })}
+        <div style={{ marginTop: -2 }}>
+          <Typography variant='caption'>{t("Select existing member to grant additional permissions")}</Typography>
+        </div>
+      </DialogTitle>
       <DialogContent style={{ minWidth: 400 }}>
         <FormControl className={classes.form}>
           <MagnitudeAutocomplete<UserListItem>
